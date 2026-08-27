@@ -6,11 +6,23 @@ export interface Course {
   soChoConLai: number;
 }
 
-// Cấu trúc phân trang trả về từ Spring Data JPA (Page<CourseDTO>)
 export interface PagedResponse<T> {
   content: T[];
-  totalElements: number;
   totalPages: number;
-  number: number; // trang hiện tại (bắt đầu từ 0)
+  totalElements: number;
   size: number;
+  number: number;
 }
+
+// Bổ sung thêm cho Buổi 7:
+export interface CourseFormValues {
+  tenMonHoc: string;
+  soTinChi: string;  // Dùng string trong form để dễ xử lý ô trống, sẽ parse thành Number khi gửi API
+  soChoToiDa: string;
+}
+
+export const emptyCourseForm: CourseFormValues = {
+  tenMonHoc: '',
+  soTinChi: '',
+  soChoToiDa: '',
+};
