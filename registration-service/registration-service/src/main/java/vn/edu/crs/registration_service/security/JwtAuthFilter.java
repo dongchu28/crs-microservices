@@ -1,6 +1,5 @@
 package vn.edu.crs.registration_service.security;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -45,11 +44,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String username = claims.getSubject();
                 String role = claims.get("role", String.class);
 
+                // Lấy userId an toàn qua Number để tránh ClassCastException
+                Object userIdObj = claims.get("userId");
+                Long userId = userIdObj != null ? ((Number) userIdObj).longValue() : null;
+
                 var authToken = new UsernamePasswordAuthenticationToken(
-                        username, null, List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        username,
+                        userId, // Lưu userId vào credentials để Controller lấy ra dùng
+                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
                 );
+
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } catch (Exception e) {
+                e.printStackTrace(); // In lỗi để kiểm tra nếu token sai secret hoặc format
                 SecurityContextHolder.clearContext();
             }
         }
