@@ -24,12 +24,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // 1. Cho phép tất cả request OPTIONS (Preflight của trình duyệt)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // 2. Cho phép role STUDENT thực hiện các thao tác đăng ký / xem / hủy
-                        .requestMatchers("/api/registrations", "/api/registrations/**", "/registrations", "/registrations/**").hasRole("STUDENT")
-
+                        .requestMatchers(HttpMethod.POST, "/registrations/**").hasRole("STUDENT")
+                        .requestMatchers(HttpMethod.GET, "/registrations/my").hasRole("STUDENT")
+                        .requestMatchers(HttpMethod.DELETE, "/registrations/**").hasRole("STUDENT")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

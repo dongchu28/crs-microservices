@@ -1,6 +1,5 @@
 package vn.edu.crs.auth_service.security;
 
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

@@ -35,43 +35,38 @@ export default function CourseList({
 
   if (state === 'empty') return <p>Không tìm thấy môn học nào phù hợp.</p>;
 
-  const showActions = !!onEdit || !!onDelete || !!onRegister;
+  const showActions = Boolean(onEdit || onDelete || onRegister);
 
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
+    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
       <thead>
         <tr style={{ textAlign: 'left', borderBottom: '2px solid #333' }}>
-          <th style={{ padding: 8 }}>Tên môn học</th>
-          <th style={{ padding: 8 }}>Số tín chỉ</th>
-          <th style={{ padding: 8 }}>Số chỗ còn lại</th>
-          {showActions && <th style={{ padding: 8 }}>Thao tác</th>}
+          <th style={{ padding: '8px 0' }}>Tên môn học</th>
+          <th style={{ padding: '8px 0' }}>Số tín chỉ</th>
+          <th style={{ padding: '8px 0' }}>Số chỗ còn lại</th>
+          {showActions && <th style={{ padding: '8px 0' }}>Thao tác</th>}
         </tr>
       </thead>
       <tbody>
         {courses.map((course) => (
           <tr key={course.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: 8 }}>{course.tenMonHoc}</td>
-            <td style={{ padding: 8 }}>{course.soTinChi}</td>
+            <td style={{ padding: '8px 0' }}>{course.tenMonHoc}</td>
+            <td style={{ padding: '8px 0' }}>{course.soTinChi}</td>
             <td
               style={{
-                padding: 8,
+                padding: '8px 0',
                 color: course.soChoConLai === 0 ? '#b91c1c' : 'inherit',
-                fontWeight: course.soChoConLai === 0 ? 'bold' : 'normal',
               }}
             >
               {course.soChoConLai} / {course.soChoToiDa}
             </td>
             {showActions && (
-              <td style={{ padding: 8 }}>
-                {onEdit && (
-                  <button onClick={() => onEdit(course)} style={{ cursor: 'pointer' }}>
-                    Sửa
-                  </button>
-                )}
+              <td style={{ padding: '8px 0' }}>
+                {onEdit && <button onClick={() => onEdit(course)}>Sửa</button>}
                 {onDelete && (
                   <button
                     onClick={() => onDelete(course)}
-                    style={{ marginLeft: 8, color: '#b91c1c', cursor: 'pointer' }}
+                    style={{ marginLeft: 8, color: '#b91c1c' }}
                   >
                     Xóa
                   </button>
@@ -80,7 +75,6 @@ export default function CourseList({
                   <button
                     onClick={() => onRegister(course)}
                     disabled={course.soChoConLai === 0 || registeringId === course.id}
-                    style={{ cursor: course.soChoConLai === 0 ? 'not-allowed' : 'pointer' }}
                   >
                     {registeringId === course.id
                       ? 'Đang đăng ký...'

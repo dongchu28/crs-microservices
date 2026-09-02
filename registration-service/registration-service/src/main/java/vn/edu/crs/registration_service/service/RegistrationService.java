@@ -27,11 +27,8 @@ public class RegistrationService {
                     dto.getStudentId(), dto.getCourseId(), DA_DANG_KY)) {
                 throw new IllegalStateException("Sinh vien da dang ky mon hoc nay roi");
             }
-
-            // Bước 1: Gọi trừ chỗ trước
             courseClient.reserveSeat(dto.getCourseId());
 
-            // Bước 2: Lưu thông tin sau khi trừ chỗ thành công
             Registration registration = new Registration();
             registration.setStudentId(dto.getStudentId());
             registration.setCourseId(dto.getCourseId());
@@ -49,7 +46,6 @@ public class RegistrationService {
                 throw new IllegalStateException("Dang ky nay da duoc huy truoc do");
             }
 
-            // Hoàn chỗ ở course-service trước khi đổi trạng thái
             courseClient.releaseSeat(registration.getCourseId());
 
             registration.setTrangThai(DA_HUY);

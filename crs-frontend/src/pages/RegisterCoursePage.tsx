@@ -31,7 +31,7 @@ export default function RegisterCoursePage() {
     try {
       await registerCourse({ studentId: user.id, courseId: course.id });
       showToast(`Đăng ký thành công môn "${course.tenMonHoc}"`, 'success');
-      refetch(); // Tự động làm mới danh sách để cập nhật số chỗ
+      refetch(); // Tải lại danh sách để cập nhật số chỗ còn lại
     } catch (err) {
       let message = 'Đăng ký không thành công, vui lòng thử lại.';
       if (axios.isAxiosError<ApiErrorResponse>(err) && err.response?.data?.message) {
@@ -44,7 +44,7 @@ export default function RegisterCoursePage() {
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
+    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto', fontFamily: 'sans-serif' }}>
       <h1>Đăng ký học phần</h1>
       <SearchBox onSearch={handleSearch} />
       <div style={{ marginTop: 16 }}>
@@ -62,7 +62,13 @@ export default function RegisterCoursePage() {
         totalPages={totalPages}
         onPageChange={setPage}
       />
-      {toast && <Toast message={toast.message} type={toast.type} onClose={clearToast} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={clearToast}
+        />
+      )}
     </div>
   );
 }

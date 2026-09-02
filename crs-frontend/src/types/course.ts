@@ -1,23 +1,7 @@
-export interface Course {
-  id: number;
-  tenMonHoc: string;
-  soTinChi: number;
-  soChoToiDa: number;
-  soChoConLai: number;
-}
-
-export interface PagedResponse<T> {
-  content: T[];
-  totalPages: number;
-  totalElements: number;
-  size: number;
-  number: number;
-}
-
-// Bổ sung thêm cho Buổi 7:
+// Thêm vào cuối file types/course.ts hiện tại:
 export interface CourseFormValues {
   tenMonHoc: string;
-  soTinChi: string;  // Dùng string trong form để dễ xử lý ô trống, sẽ parse thành Number khi gửi API
+  soTinChi: string; // Dùng string để kiểm soát input rỗng, ép kiểu Number khi gửi đi
   soChoToiDa: string;
 }
 

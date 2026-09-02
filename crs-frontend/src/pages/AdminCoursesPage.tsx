@@ -27,7 +27,7 @@ export default function AdminCoursesPage() {
     if (axios.isAxiosError<ApiErrorResponse>(err)) {
       const data = err.response?.data;
       if (data?.message) return data.message;
-      if (data && typeof data === 'object') {
+      if (data) {
         const firstFieldError = Object.values(data).find((v) => typeof v === 'string');
         if (firstFieldError) return firstFieldError as string;
       }
@@ -54,7 +54,7 @@ export default function AdminCoursesPage() {
   };
 
   const handleDelete = async (course: Course) => {
-    if (!window.confirm(`Bạn có chắc muốn xóa môn học "${course.tenMonHoc}"?`)) return;
+    if (!window.confirm(`Xóa môn học "${course.tenMonHoc}"?`)) return;
     try {
       await deleteCourse(course.id);
       refetch();

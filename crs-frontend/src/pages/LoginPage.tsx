@@ -26,7 +26,7 @@ export default function LoginPage() {
       if (axios.isAxiosError<ApiErrorResponse>(err) && err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
-        setError('Đăng nhập thất bại, vui lòng kiểm tra lại thông tin.');
+        setError('Đăng nhập thất bại, vui lòng thử lại.');
       }
     } finally {
       setSubmitting(false);
@@ -34,25 +34,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 360, margin: '80px auto', padding: 24, border: '1px solid #ddd', borderRadius: 8 }}>
+    <div
+      style={{
+        maxWidth: 360,
+        margin: '80px auto',
+        padding: 24,
+        border: '1px solid #ddd',
+        borderRadius: 8,
+        fontFamily: 'sans-serif',
+      }}
+    >
       <h2>Đăng nhập hệ thống CRS</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: 12 }}>
-          <label>Tên đăng nhập</label><br />
+          <label>Tên đăng nhập</label>
+          <br />
           <input
+            type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ width: '100%', padding: 8, marginTop: 4, boxSizing: 'border-box' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: 8 }}
             required
           />
         </div>
         <div style={{ marginBottom: 12 }}>
-          <label>Mật khẩu</label><br />
+          <label>Mật khẩu</label>
+          <br />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: 8, marginTop: 4, boxSizing: 'border-box' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: 8 }}
             required
           />
         </div>
@@ -60,7 +72,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={submitting}
-          style={{ width: '100%', padding: 10, cursor: 'pointer', marginTop: 8 }}
+          style={{ width: '100%', padding: 10, cursor: 'pointer' }}
         >
           {submitting ? 'Đang xử lý...' : 'Đăng nhập'}
         </button>

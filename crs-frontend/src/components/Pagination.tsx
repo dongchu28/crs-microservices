@@ -1,10 +1,14 @@
 interface PaginationProps {
-  currentPage: number; // 0-based index
+  currentPage: number; // Bắt đầu từ 0
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, i) => i);
@@ -14,9 +18,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         disabled={currentPage === 0}
         onClick={() => onPageChange(currentPage - 1)}
-        style={{ padding: '4px 8px', cursor: currentPage === 0 ? 'not-allowed' : 'pointer' }}
       >
-        « Trang trước
+        &laquo; Trang trước
       </button>
 
       {pages.map((p) => (
@@ -24,10 +27,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           key={p}
           onClick={() => onPageChange(p)}
           style={{
-            padding: '4px 8px',
             fontWeight: p === currentPage ? 'bold' : 'normal',
             textDecoration: p === currentPage ? 'underline' : 'none',
-            cursor: 'pointer'
           }}
         >
           {p + 1}
@@ -37,9 +38,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         disabled={currentPage >= totalPages - 1}
         onClick={() => onPageChange(currentPage + 1)}
-        style={{ padding: '4px 8px', cursor: currentPage >= totalPages - 1 ? 'not-allowed' : 'pointer' }}
       >
-        Trang sau »
+        Trang sau &raquo;
       </button>
     </div>
   );

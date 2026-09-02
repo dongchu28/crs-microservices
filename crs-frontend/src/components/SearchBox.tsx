@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface SearchBoxProps {
   onSearch: (keyword: string) => void;
@@ -7,14 +7,21 @@ interface SearchBoxProps {
 
 export default function SearchBox({ onSearch, placeholder }: SearchBoxProps) {
   const [inputValue, setInputValue] = useState('');
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    // Bỏ qua lần đầu tiên component mount để không vô tình gọi onSearch('')
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     const timer = setTimeout(() => {
       onSearch(inputValue.trim());
     }, 400);
 
-    return () => clearTimeout(timer); // Hủy timer cũ mỗi khi gõ ký tự mới
-  }, [inputValue, onSearch]);
+    return () => clearTimeout(timer);
+  }, [inputValue]); // ⚠️ Chỉ để inputValue ở dependency, KHÔNG để onSearch vào đây
 
   return (
     <input

@@ -7,7 +7,6 @@ import Pagination from '../components/Pagination';
 export default function CoursesPage() {
   const [keyword, setKeyword] = useState('');
   const [page, setPage] = useState(0);
-
   const { courses, totalPages, state, errorMessage, refetch } = useCourses(keyword, page);
 
   const handleSearch = (newKeyword: string) => {
@@ -16,7 +15,7 @@ export default function CoursesPage() {
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
+    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto', fontFamily: 'sans-serif' }}>
       <h1>Danh sách môn học</h1>
       <SearchBox onSearch={handleSearch} />
       <div style={{ marginTop: 16 }}>

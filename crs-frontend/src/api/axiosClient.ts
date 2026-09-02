@@ -7,7 +7,7 @@ const axiosClient = axios.create({
   },
 });
 
-// Request Interceptor (từ Buổi 7)
+// Request Interceptor: đính kèm Bearer token
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('crs_token');
   if (token) {
@@ -16,14 +16,14 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Response Interceptor (Mới ở Buổi 8)
+// Response Interceptor: xử lý 401 tự động đăng xuất
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       localStorage.removeItem('crs_token');
       localStorage.removeItem('crs_user');
-      // Dùng window.location vì đây là file TypeScript thuần (không dùng được React Hook ở đây)
+
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';
       }

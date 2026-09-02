@@ -27,7 +27,7 @@ export function useCourses(keyword: string, page: number, size = 10) {
           if (err.response?.data?.message) {
             message = err.response.data.message;
           } else if (!err.response) {
-            // Không nhận được response: Gateway hoặc course-service tắt/mất mạng
+            // Không nhận được response: Gateway hoặc course-service đang tắt
             message = 'Không kết nối được tới hệ thống. Vui lòng thử lại sau.';
           }
         }

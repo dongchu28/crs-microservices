@@ -11,7 +11,16 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={{ display: 'flex', gap: 16, padding: '12px 24px', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
+    <nav
+      style={{
+        display: 'flex',
+        gap: 16,
+        padding: 12,
+        borderBottom: '1px solid #ddd',
+        alignItems: 'center',
+        fontFamily: 'sans-serif',
+      }}
+    >
       <Link to="/courses">Danh sách môn học</Link>
       {isAuthenticated && user?.role === 'ADMIN' && (
         <Link to="/admin/courses">Quản trị môn học</Link>
@@ -27,11 +36,9 @@ export default function Navbar() {
         {isAuthenticated ? (
           <>
             <span style={{ marginRight: 12 }}>
-              Xin chào, <strong>{user?.username}</strong> ({user?.role})
+              Xin chào, {user?.username} ({user?.role})
             </span>
-            <button onClick={handleLogout} style={{ padding: '4px 8px', cursor: 'pointer' }}>
-              Đăng xuất
-            </button>
+            <button onClick={handleLogout}>Đăng xuất</button>
           </>
         ) : (
           <Link to="/login">Đăng nhập</Link>

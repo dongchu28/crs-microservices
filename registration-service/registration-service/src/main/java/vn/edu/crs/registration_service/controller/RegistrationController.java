@@ -33,4 +33,5 @@ public class RegistrationController {
         Long studentId = (Long) authentication.getCredentials();
         return registrationService.getMyRegistrations(studentId);
     }
+
 }

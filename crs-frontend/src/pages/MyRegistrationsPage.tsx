@@ -27,15 +27,11 @@ export default function MyRegistrationsPage() {
       const res = await getMyRegistrations();
       const activeRegistrations = res.data.filter((r) => r.trangThai === 'DA_DANG_KY');
 
-      // Ghép tên môn học qua Promise.all
       const enriched = await Promise.all(
         activeRegistrations.map(async (reg) => {
           try {
             const courseRes = await getCourseById(reg.courseId);
-            return {
-              ...reg,
-              courseName: (courseRes.data as Course).tenMonHoc,
-            };
+            return { ...reg, courseName: (courseRes.data as Course).tenMonHoc };
           } catch {
             return {
               ...reg,
@@ -66,7 +62,7 @@ export default function MyRegistrationsPage() {
     try {
       await cancelRegistration(row.id);
       showToast(`Đã hủy đăng ký môn "${row.courseName}"`, 'success');
-      loadData();
+      loadData(); // Cập nhật lại bảng
     } catch (err) {
       let message = 'Hủy đăng ký không thành công.';
       if (axios.isAxiosError<ApiErrorResponse>(err) && err.response?.data?.message) {
@@ -79,31 +75,33 @@ export default function MyRegistrationsPage() {
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
+    <div style={{ padding: 24, maxWidth: 800, margin: '0 auto', fontFamily: 'sans-serif' }}>
       <h1>Môn học đã đăng ký</h1>
       {loading && <p>Đang tải...</p>}
       {!loading && loadError && <p style={{ color: '#b91c1c' }}>{loadError}</p>}
-      {!loading && !loadError && rows.length === 0 && <p>Bạn chưa đăng ký môn học nào.</p>}
-
+      {!loading && !loadError && rows.length === 0 && (
+        <p>Bạn chưa đăng ký môn học nào.</p>
+      )}
       {!loading && !loadError && rows.length > 0 && (
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '2px solid #333' }}>
-              <th style={{ padding: 8 }}>Tên môn học</th>
-              <th style={{ padding: 8 }}>Ngày đăng ký</th>
-              <th style={{ padding: 8 }}>Thao tác</th>
+              <th style={{ padding: '8px 0' }}>Tên môn học</th>
+              <th style={{ padding: '8px 0' }}>Ngày đăng ký</th>
+              <th style={{ padding: '8px 0' }}>Thao tác</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
               <tr key={row.id} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: 8 }}>{row.courseName}</td>
-                <td style={{ padding: 8 }}>{new Date(row.ngayDangKy).toLocaleString('vi-VN')}</td>
-                <td style={{ padding: 8 }}>
+                <td style={{ padding: '8px 0' }}>{row.courseName}</td>
+                <td style={{ padding: '8px 0' }}>
+                  {new Date(row.ngayDangKy).toLocaleString('vi-VN')}
+                </td>
+                <td style={{ padding: '8px 0' }}>
                   <button
                     onClick={() => handleCancel(row)}
                     disabled={cancellingId === row.id}
-                    style={{ color: '#b91c1c', cursor: 'pointer' }}
                   >
                     {cancellingId === row.id ? 'Đang hủy...' : 'Hủy đăng ký'}
                   </button>
@@ -113,7 +111,13 @@ export default function MyRegistrationsPage() {
           </tbody>
         </table>
       )}
-      {toast && <Toast message={toast.message} type={toast.type} onClose={clearToast} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={clearToast}
+        />
+      )}
     </div>
   );
 }

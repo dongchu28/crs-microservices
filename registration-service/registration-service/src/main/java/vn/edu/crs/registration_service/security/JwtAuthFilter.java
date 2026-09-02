@@ -44,19 +44,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String username = claims.getSubject();
                 String role = claims.get("role", String.class);
 
-                // Lấy userId an toàn qua Number để tránh ClassCastException
-                Object userIdObj = claims.get("userId");
-                Long userId = userIdObj != null ? ((Number) userIdObj).longValue() : null;
+                Long userId = claims.get("userId", Long.class);
 
                 var authToken = new UsernamePasswordAuthenticationToken(
                         username,
-                        userId, // Lưu userId vào credentials để Controller lấy ra dùng
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        userId,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + role)) // Đảm bảo role là STUDENT
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } catch (Exception e) {
-                e.printStackTrace(); // In lỗi để kiểm tra nếu token sai secret hoặc format
+                e.printStackTrace();
                 SecurityContextHolder.clearContext();
             }
         }

@@ -3,7 +3,7 @@ import type { Course, CourseFormValues } from '../types/course';
 import { emptyCourseForm } from '../types/course';
 
 interface CourseFormProps {
-  editingCourse: Course | null; // null = chế độ Thêm mới; có giá trị = chế độ Sửa
+  editingCourse: Course | null; // null = Thêm; có giá trị = Sửa
   onSubmit: (values: CourseFormValues) => Promise<void>;
   onCancel: () => void;
   submitting: boolean;
@@ -20,7 +20,7 @@ export default function CourseForm({
   const [values, setValues] = useState<CourseFormValues>(emptyCourseForm);
   const [clientErrors, setClientErrors] = useState<Partial<CourseFormValues>>({});
 
-  // Mỗi khi editingCourse thay đổi (bấm Sửa dòng khác), mồi lại dữ liệu vào form
+  // Reset/Fill form mỗi khi editingCourse thay đổi
   useEffect(() => {
     if (editingCourse) {
       setValues({
@@ -36,6 +36,7 @@ export default function CourseForm({
 
   const validate = (): boolean => {
     const errors: Partial<CourseFormValues> = {};
+
     if (!values.tenMonHoc.trim()) {
       errors.tenMonHoc = 'Tên môn học không được để trống';
     }
@@ -73,57 +74,52 @@ export default function CourseForm({
       <h3>{editingCourse ? 'Sửa môn học' : 'Thêm môn học mới'}</h3>
 
       <div style={{ marginBottom: 8 }}>
-        <label>Tên môn học</label><br />
+        <label>Tên môn học</label>
+        <br />
         <input
           type="text"
           value={values.tenMonHoc}
           onChange={(e) => setValues({ ...values, tenMonHoc: e.target.value })}
-          style={{ width: '100%', maxWidth: 400, padding: 6, marginTop: 4 }}
+          style={{ width: '100%', maxWidth: 400, padding: 6 }}
         />
         {clientErrors.tenMonHoc && (
-          <p style={{ color: '#b91c1c', margin: '4px 0 0 0', fontSize: 13 }}>
-            {clientErrors.tenMonHoc}
-          </p>
+          <p style={{ color: '#b91c1c', margin: '4px 0 0' }}>{clientErrors.tenMonHoc}</p>
         )}
       </div>
 
       <div style={{ marginBottom: 8 }}>
-        <label>Số tín chỉ</label><br />
+        <label>Số tín chỉ</label>
+        <br />
         <input
           type="number"
           value={values.soTinChi}
           onChange={(e) => setValues({ ...values, soTinChi: e.target.value })}
-          style={{ width: '100%', maxWidth: 400, padding: 6, marginTop: 4 }}
+          style={{ width: '100%', maxWidth: 400, padding: 6 }}
         />
         {clientErrors.soTinChi && (
-          <p style={{ color: '#b91c1c', margin: '4px 0 0 0', fontSize: 13 }}>
-            {clientErrors.soTinChi}
-          </p>
+          <p style={{ color: '#b91c1c', margin: '4px 0 0' }}>{clientErrors.soTinChi}</p>
         )}
       </div>
 
       <div style={{ marginBottom: 8 }}>
-        <label>Số chỗ tối đa</label><br />
+        <label>Số chỗ tối đa</label>
+        <br />
         <input
           type="number"
           value={values.soChoToiDa}
           onChange={(e) => setValues({ ...values, soChoToiDa: e.target.value })}
-          style={{ width: '100%', maxWidth: 400, padding: 6, marginTop: 4 }}
+          style={{ width: '100%', maxWidth: 400, padding: 6 }}
         />
         {clientErrors.soChoToiDa && (
-          <p style={{ color: '#b91c1c', margin: '4px 0 0 0', fontSize: 13 }}>
-            {clientErrors.soChoToiDa}
-          </p>
+          <p style={{ color: '#b91c1c', margin: '4px 0 0' }}>{clientErrors.soChoToiDa}</p>
         )}
       </div>
 
       {serverError && (
-        <p style={{ color: '#b91c1c', fontWeight: 'bold', margin: '8px 0' }}>
-          {serverError}
-        </p>
+        <p style={{ color: '#b91c1c', margin: '8px 0' }}>{serverError}</p>
       )}
 
-      <button type="submit" disabled={submitting} style={{ padding: '6px 12px', cursor: 'pointer' }}>
+      <button type="submit" disabled={submitting} style={{ padding: '6px 16px' }}>
         {submitting ? 'Đang lưu...' : editingCourse ? 'Cập nhật' : 'Thêm mới'}
       </button>
 
@@ -131,7 +127,7 @@ export default function CourseForm({
         <button
           type="button"
           onClick={onCancel}
-          style={{ marginLeft: 8, padding: '6px 12px', cursor: 'pointer' }}
+          style={{ marginLeft: 8, padding: '6px 16px' }}
         >
           Hủy
         </button>

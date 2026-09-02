@@ -4,7 +4,7 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  userId: number; // Thêm trường userId
+  userId: number;
   token: string;
   username: string;
   role: 'ADMIN' | 'STUDENT';

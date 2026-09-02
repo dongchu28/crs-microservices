@@ -5,9 +5,8 @@ import LoginPage from './pages/LoginPage';
 import CoursesPage from './pages/CoursePage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
 import RegisterCoursePage from './pages/RegisterCoursePage';
-import MyRegistrationsPage from './pages/MyRegistrationsPage';
 import Navbar from './components/Navbar';
-
+import MyRegistrationsPage from './pages/MyRegistrationsPage';
 function App() {
   return (
     <BrowserRouter>
@@ -41,7 +40,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/courses" replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

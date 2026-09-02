@@ -36,8 +36,8 @@ export default function Toast({ message, type, onClose }: ToastProps) {
           background: 'none',
           border: 'none',
           color: '#fff',
-          fontWeight: 'bold',
           cursor: 'pointer',
+          fontWeight: 'bold',
         }}
       >
         ✕
