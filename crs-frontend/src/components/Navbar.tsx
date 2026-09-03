@@ -23,7 +23,10 @@ export default function Navbar() {
     >
       <Link to="/courses">Danh sách môn học</Link>
       {isAuthenticated && user?.role === 'ADMIN' && (
+          <>
         <Link to="/admin/courses">Quản trị môn học</Link>
+        <Link to="/admin/api-keys">Quan ly API Key</Link>
+      </>
       )}
       {isAuthenticated && user?.role === 'STUDENT' && (
         <>
