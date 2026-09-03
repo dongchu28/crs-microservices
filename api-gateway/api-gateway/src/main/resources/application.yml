@@ -13,7 +13,13 @@ spring:
             - Path=/api/auth/**
           filters:
             - RewritePath=/api/auth/(?<segment>.*), /auth/$\{segment}
-
+        - id: auth-service-apikeys
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/api-keys,/api/api-keys/**
+          filters:
+            - RewritePath=/api/api-keys/(?<segment>.*), /api-keys/${segment}
+            - RewritePath=/api/api-keys, /api-keys
         - id: course-service-list
           uri: http://localhost:8082
           predicates:
